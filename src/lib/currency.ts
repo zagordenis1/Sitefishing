@@ -1,6 +1,6 @@
 import type { Locale } from "@/i18n/dictionaries";
 
-export type CurrencyCode = "UAH" | "USD" | "RUB" | "PLN";
+export type CurrencyCode = "UAH" | "USD" | "PLN";
 
 export type CurrencyConfig = {
   code: CurrencyCode;
@@ -47,11 +47,12 @@ export const currencyByLocale: Record<Locale, CurrencyConfig> = {
     fractionDigits: 2,
   },
   ru: {
-    code: "RUB",
-    symbol: "₽",
-    rate: 2.05,
+    // Russian UI keeps base UAH pricing — no RUB conversion.
+    code: "UAH",
+    symbol: "₴",
+    rate: 1,
     position: "suffix",
-    numberLocale: "ru-RU",
+    numberLocale: "uk-UA",
     fractionDigits: 0,
   },
   pl: {

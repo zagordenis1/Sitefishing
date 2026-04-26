@@ -17,7 +17,7 @@ Framer Motion. Deploys to GitHub Pages out of the box.
   Polski (PL). Picker in the header, choice persisted in `localStorage`,
   texts swap dynamically.
 - **Multi-currency without an API** — UA → UAH (₴), EN → USD ($),
-  RU → RUB (₽), PL → PLN (zł). Rates configured in one file
+  RU → UAH (₴), PL → PLN (zł). Rates configured in one file
   ([`src/lib/currency.ts`](./src/lib/currency.ts)) and applied on the fly.
 - **Catalog** with category filtering, hover effects, and a polished
   product modal that surfaces the seller's phone number and a
@@ -105,7 +105,7 @@ using the per-locale rate from `src/lib/currency.ts`:
 export const currencyByLocale = {
   uk: { code: "UAH", rate: 1,     symbol: "₴",  position: "suffix", ... },
   en: { code: "USD", rate: 0.024, symbol: "$",  position: "prefix", ... },
-  ru: { code: "RUB", rate: 2.05,  symbol: "₽",  position: "suffix", ... },
+  ru: { code: "UAH", rate: 1,     symbol: "₴",  position: "suffix", ... }, // RU UI keeps base UAH
   pl: { code: "PLN", rate: 0.097, symbol: "zł", position: "suffix", ... },
 };
 ```
