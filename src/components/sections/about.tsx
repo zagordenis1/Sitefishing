@@ -28,10 +28,10 @@ export function About() {
           <div className="absolute inset-0 bg-gradient-to-tr from-ocean-900/60 via-ocean-900/10 to-transparent" />
           <div className="absolute bottom-5 left-5 right-5 flex flex-wrap gap-2">
             <span className="pill bg-white/85 text-ocean-900">
-              {new Date().getFullYear() - 2014}+ years
+              {t.about.yearsBadge(new Date().getFullYear() - 2014)}
             </span>
             <span className="pill bg-ocean-500/90 text-white">
-              Made by anglers
+              {t.about.teamBadge}
             </span>
           </div>
         </motion.div>

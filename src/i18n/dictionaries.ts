@@ -60,6 +60,8 @@ export type Dictionary = {
     title: string;
     body: string;
     bullets: string[];
+    yearsBadge: (years: number) => string;
+    teamBadge: string;
   };
   contact: {
     title: string;
@@ -430,6 +432,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Прямі поставки від виробників",
         "Програма лояльності та сезонні знижки",
       ],
+      yearsBadge: (years) => `${years}+ років досвіду`,
+      teamBadge: "Зроблено рибалками",
     },
     contact: {
       title: "Контакти",
@@ -531,6 +535,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Direct supply from manufacturers",
         "Loyalty program and seasonal deals",
       ],
+      yearsBadge: (years) => `${years}+ years of experience`,
+      teamBadge: "Made by anglers",
     },
     contact: {
       title: "Contact us",
@@ -632,6 +638,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Прямые поставки от производителей",
         "Программа лояльности и сезонные скидки",
       ],
+      yearsBadge: (years) => `${years}+ лет опыта`,
+      teamBadge: "Сделано рыбаками",
     },
     contact: {
       title: "Контакты",
@@ -733,6 +741,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Bezpośrednie dostawy od producentów",
         "Program lojalnościowy i sezonowe oferty",
       ],
+      yearsBadge: (years) => `${years}+ lat doświadczenia`,
+      teamBadge: "Zrobione przez wędkarzy",
     },
     contact: {
       title: "Kontakt",
