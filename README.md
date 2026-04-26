@@ -113,6 +113,89 @@ export const currencyByLocale = {
 Update the `rate` numbers when courses change — every price on the site
 re-renders automatically.
 
+### Adding your own products and photos
+
+Products live in two places:
+
+1. `src/data/products.ts` — the product list (id, category, price, image, stock).
+2. `src/i18n/dictionaries.ts` — translated `name`, `description` and
+   `longDescription` for **all four** locales (UA / EN / RU / PL).
+
+#### 1. Put a photo in `public/products/`
+
+The simplest path is to drop the image into the `public/products/` folder
+of this repo (create it if it doesn't exist):
+
+```
+public/
+└── products/
+    └── my-rod.jpg
+```
+
+It will be served at the URL `/products/my-rod.jpg`. You can use `.jpg`,
+`.png`, `.webp` or `.avif`. Keep images **square or 4:3, ~900 px wide**
+to match the existing cards.
+
+> Alternative — paste any public CDN URL (Unsplash, your own hosting,
+> etc.) into the `image` field below. Both styles are supported.
+
+#### 2. Add an entry to `src/data/products.ts`
+
+```ts
+// src/data/products.ts
+export const products: Product[] = [
+  // …existing items…
+  {
+    id: "my-rod",                 // unique slug — used as i18n key
+    category: "rods",             // one of: rods | reels | lures | lines | accessories | apparel
+    priceUAH: 4290,               // base price in UAH (₴)
+    oldPriceUAH: 4990,            // optional — shown struck-through
+    image: "/products/my-rod.jpg",// public path or full https URL
+    inStock: true,
+  },
+];
+```
+
+The currency is converted automatically per language using
+`src/lib/currency.ts` — never put `$` or `zł` in `priceUAH`.
+
+#### 3. Add translations in `src/i18n/dictionaries.ts`
+
+You must add the same `id` to **all four** product blocks
+(`ukProducts`, `enProducts`, `ruProducts`, `plProducts`). TypeScript will
+warn you if you miss one.
+
+```ts
+// inside ukProducts:
+"my-rod": {
+  name: "Мій новий спінінг",
+  description: "Короткий опис для картки в каталозі",
+  longDescription:
+    "Розгорнутий опис для модального вікна — матеріали, тест, особливості.",
+},
+// …and the same key inside enProducts / ruProducts / plProducts
+```
+
+#### 4. (Optional) Add a brand-new category
+
+If the new product doesn't fit any existing category, edit:
+
+- `src/data/products.ts` — extend the `Category` union and the
+  `categories` array.
+- `src/i18n/dictionaries.ts` — add the new key to `ukCategories`,
+  `enCategories`, `ruCategories`, `plCategories`.
+
+#### 5. Verify and ship
+
+```bash
+npm run lint       # ESLint
+npm run typecheck  # tsc --noEmit (catches missing translations)
+npm run dev        # http://localhost:3000 — eyeball the new card
+```
+
+Push to `main` and the GitHub Actions workflow will publish the update
+to GitHub Pages automatically.
+
 ## Deploy to GitHub Pages
 
 A ready-to-use workflow lives at [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml).
