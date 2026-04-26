@@ -41,10 +41,10 @@ body {
     border: 1px solid rgba(var(--border), 0.08);
   }
   .glass-strong {
-    background-color: rgba(var(--card), 0.92);
+    background-color: rgb(var(--card));
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border: 1px solid rgba(var(--border), 0.12);
+    border: 1px solid rgba(var(--border), 0.18);
   }
   .gradient-text {
     background: linear-gradient(
