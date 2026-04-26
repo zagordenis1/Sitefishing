@@ -196,6 +196,90 @@ npm run dev        # http://localhost:3000 — eyeball the new card
 Push to `main` and the GitHub Actions workflow will publish the update
 to GitHub Pages automatically.
 
+### Як додати свої товари і фото (українською)
+
+Дані про товари живуть у двох місцях:
+
+1. `src/data/products.ts` — список товарів (id, категорія, ціна, фото, наявність).
+2. `src/i18n/dictionaries.ts` — переклади полів `name`, `description` та
+   `longDescription` для **усіх чотирьох** мов (UA / EN / RU / PL).
+
+#### 1. Покладіть фото у `public/products/`
+
+Найпростіший шлях — кинути зображення у теку `public/products/`
+цього репозиторію (створіть її, якщо немає):
+
+```
+public/
+└── products/
+    └── my-rod.jpg
+```
+
+Файл буде доступний за URL `/products/my-rod.jpg`. Підтримуються
+формати `.jpg`, `.png`, `.webp` та `.avif`. Тримайте зображення
+**квадратними або 4:3, ширина ~900 px**, щоб вони виглядали так само,
+як існуючі картки.
+
+> Альтернатива — вставте будь-який публічний URL з CDN (Unsplash,
+> власний хостинг тощо) у поле `image` нижче. Обидва варіанти працюють.
+
+#### 2. Додайте запис у `src/data/products.ts`
+
+```ts
+// src/data/products.ts
+export const products: Product[] = [
+  // …вже наявні товари…
+  {
+    id: "my-rod",                 // унікальний slug — він же ключ у i18n
+    category: "rods",             // одне з: rods | reels | lures | lines | accessories | apparel
+    priceUAH: 4290,               // базова ціна в гривнях (₴)
+    oldPriceUAH: 4990,            // опційно — стара ціна для перекреслення
+    image: "/products/my-rod.jpg",// шлях у public/ або повний https URL
+    inStock: true,
+  },
+];
+```
+
+Валюта конвертується автоматично залежно від мови — за допомогою
+`src/lib/currency.ts`. **Ніколи** не вписуйте `$` чи `zł` у `priceUAH`.
+
+#### 3. Додайте переклади у `src/i18n/dictionaries.ts`
+
+Той самий `id` має зʼявитись у **усіх чотирьох** обʼєктах товарів
+(`ukProducts`, `enProducts`, `ruProducts`, `plProducts`). Якщо один із
+перекладів пропустите — TypeScript це підкреслить.
+
+```ts
+// всередині ukProducts:
+"my-rod": {
+  name: "Мій новий спінінг",
+  description: "Короткий опис для картки в каталозі",
+  longDescription:
+    "Розгорнутий опис для модального вікна — матеріали, тест, особливості.",
+},
+// …та такий самий ключ у enProducts / ruProducts / plProducts
+```
+
+#### 4. (Опційно) Додати нову категорію
+
+Якщо новий товар не підходить під жодну існуючу категорію — оновіть:
+
+- `src/data/products.ts` — розширте union-тип `Category` та масив
+  `categories`.
+- `src/i18n/dictionaries.ts` — додайте новий ключ у `ukCategories`,
+  `enCategories`, `ruCategories`, `plCategories`.
+
+#### 5. Перевірте і запуште
+
+```bash
+npm run lint       # ESLint
+npm run typecheck  # tsc --noEmit (зловить пропущені переклади)
+npm run dev        # http://localhost:3000 — глянути нову картку
+```
+
+Запуште коміт у `main` — GitHub Actions автоматично оновить сайт
+на GitHub Pages.
+
 ## Deploy to GitHub Pages
 
 A ready-to-use workflow lives at [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml).
